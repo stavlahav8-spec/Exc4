@@ -2,6 +2,24 @@ QMainWindow, QDialog {
     background-color: #f4f6f8;
 }
 
+QDialog#aboutWindow {
+    background-color: #f4f6f8;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+}
+
+QDialog#aboutWindow QLabel {
+    background-color: transparent;
+}
+
+QDialog#aboutWindow QLabel#aboutName {
+    color: #1e293b;
+}
+
+QDialog#aboutWindow QLabel#aboutLink {
+    color: #2563a6;
+}
+
 QLabel {
     color: #263238;
     font-size: 14px;

@@ -119,8 +119,8 @@ class MainWindow(QMainWindow):
             subprocess.Popen(["xdg-open", filepath])
 
     def show_about(self) -> None:
-        about_window = AboutWindow(self)
-        about_window.exec()
+        self.about_window = AboutWindow(self)
+        self.about_window.exec()
 
 
 def main() -> int:
