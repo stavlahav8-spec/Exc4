@@ -93,7 +93,7 @@ class MainWindow(QMainWindow):
                         self.corrected_grades.append(int(parts[1]))
 
             self.update_table()
-            
+
     def update_table(self) -> None:
         self.table.clearContents()
         self.table.setRowCount(50)
@@ -108,15 +108,28 @@ class MainWindow(QMainWindow):
 
     def on_bonus_entered(self) -> None:
         bonus_points = self.bonus_input.value()
-        # TODO: Update self.corrected_grades using bonus_points, then call
-        # self.update_table().
+
+        for i in range(len(self.original_grades)):
+            new_grade = self.original_grades[i] + bonus_points
+            if new_grade > 100:
+                new_grade = 100
+            self.corrected_grades[i] = new_grade
+
+        self.update_table()
 
     def on_update_file(self) -> None:
         if not self.selected_file:
             QMessageBox.warning(self, "No file selected", "Load a grades file first.")
             return
 
-        # TODO: Overwrite self.selected_file with the updated CSV data.
+        with open(self.selected_file, 'r') as f:
+            header = f.readline().strip() + '\n'
+
+        with open(self.selected_file, 'w') as f:
+            f.write(header)
+            for i in range(len(self.student_ids)):
+                f.write(f"{self.student_ids[i]},{self.corrected_grades[i]}\n")
+
         self.open_file_cross_platform(self.selected_file)
 
     def open_file_cross_platform(self, filepath: str) -> None:
