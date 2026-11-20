@@ -79,9 +79,21 @@ class MainWindow(QMainWindow):
         )
         if filepath:
             self.selected_file = filepath
-            # TODO: Parse the CSV into self.student_ids, self.original_grades,
-            # and self.corrected_grades, then call self.update_table().
+            self.student_ids.clear()
+            self.original_grades.clear()
+            self.corrected_grades.clear()
 
+            with open(self.selected_file, 'r') as f:
+                next(f)
+                for line in f:
+                    if line.strip():
+                        parts = line.strip().split(',')
+                        self.student_ids.append(parts[0])
+                        self.original_grades.append(int(parts[1]))
+                        self.corrected_grades.append(int(parts[1]))
+
+            self.update_table()
+            
     def update_table(self) -> None:
         self.table.clearContents()
         self.table.setRowCount(50)
